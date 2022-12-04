@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Form } from '../../components/Form/Form';
 import { Wrapper } from '../../components/Box/Box';
 import { Section } from '../../components/Section/Section';
-import { ContactsList } from '../../components/Contacts/Contacts';
+import { ContactsList } from '../../components/ContactsList/ContactsList';
 import { Filter } from '../../components/Filter/filter';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchContacts } from 'redux/contactsSlice';

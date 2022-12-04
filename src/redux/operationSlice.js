@@ -12,13 +12,16 @@ const token = {
   },
 };
 
-export const registration = createAsyncThunk(
-  'auth/registration',
+export const registrationUser = createAsyncThunk(
+  'auth/registrationUser',
   async (user, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/user/signup');
+      const response = await axios.post('/users/signup', user);
       token.set(response.token);
-    } catch (error) {}
+      return response.data;
+    } catch (error) {
+      return rejectWithValue("Can't register. Server error. Try again.");
+    }
   }
 );
 
@@ -26,7 +29,7 @@ export const logIn = createAsyncThunk(
   'auth/logIn ',
   async (user, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/user/login');
+      const response = await axios.post('/users/login');
       token.set(response.token);
     } catch (error) {}
   }
@@ -36,7 +39,7 @@ export const logOut = createAsyncThunk(
   'auth/logOut ',
   async (user, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/user/logout');
+      const response = await axios.post('/users/logout');
       token.set(response.token);
     } catch (error) {}
   }
@@ -46,7 +49,7 @@ export const refresh = createAsyncThunk(
   'auth/refresh ',
   async (user, { rejectWithValue }) => {
     try {
-      const response = await axios.get('/user/current');
+      const response = await axios.get('/users/current');
       token.set(response.token);
     } catch (error) {}
   }
@@ -63,6 +66,23 @@ export const authSlice = createSlice({
     isLoggedIn: false,
     isRefreshing: false,
     error: null,
+    isLoading: false,
   },
-  extraReducers: {},
+  extraReducers: {
+    [registrationUser.pending]: state => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    [registrationUser.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.isLoggedIn = true;
+    },
+    [registrationUser.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+      state.isLoggedIn = false;
+    },
+  },
 });
