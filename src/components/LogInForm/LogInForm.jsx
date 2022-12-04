@@ -1,41 +1,26 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { registration } from 'redux/operationSlice';
+import { useDispatch } from 'react-redux';
+import { logIn } from 'redux/operationSlice';
 
-export const RegistrationForm = () => {
-  const error = useSelector(state => state.auth.error);
+export const LogInForm = () => {
   const dispatch = useDispatch();
   const handleSubmit = evt => {
     evt.preventDefault();
     const form = evt.target;
     const user = {
-      name: form.name.value,
       email: form.email.value,
       password: form.password.value,
     };
-    dispatch(registration(user));
+    dispatch(logIn(user));
     form.reset();
   };
 
   return (
     <>
       <p>
-        {
-          "name: 'localhost', email: 'localhost4848@mail.com', password: 'local4848'"
-        }
+        'name: 'localhost', email: 'localhost4848@mail.com', password:
+        'local4848''
       </p>
-      {error && <h2>{error}</h2>}
-
       <form onSubmit={handleSubmit}>
-        <label>
-          Name
-          <input
-            type="text"
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            required="required"
-          />
-        </label>
-        <hr></hr>
         <label>
           Email
           <input
@@ -56,7 +41,7 @@ export const RegistrationForm = () => {
           />
         </label>
         <hr></hr>
-        <button type="submit">Register </button>
+        <button type="submit">log in </button>
       </form>
     </>
   );

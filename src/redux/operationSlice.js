@@ -12,7 +12,7 @@ const token = {
   },
 };
 
-export const registrationUser = createAsyncThunk(
+export const registration = createAsyncThunk(
   'auth/registrationUser',
   async (user, { rejectWithValue }) => {
     try {
@@ -29,9 +29,12 @@ export const logIn = createAsyncThunk(
   'auth/logIn ',
   async (user, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/users/login');
+      const response = await axios.post('/users/login', user);
       token.set(response.token);
-    } catch (error) {}
+      return response.data;
+    } catch (error) {
+      return rejectWithValue("Can't log in. Server error. Try again.");
+    }
   }
 );
 
@@ -60,7 +63,7 @@ export const authSlice = createSlice({
   initialState: {
     user: {
       name: null,
-      emai: null,
+      email: null,
     },
     token: null,
     isLoggedIn: false,
@@ -69,17 +72,33 @@ export const authSlice = createSlice({
     isLoading: false,
   },
   extraReducers: {
-    [registrationUser.pending]: state => {
+    [registration.pending]: state => {
       state.isLoading = true;
       state.error = null;
     },
-    [registrationUser.fulfilled]: (state, action) => {
+    [registration.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isLoggedIn = true;
     },
-    [registrationUser.rejected]: (state, action) => {
+    [registration.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+      state.isLoggedIn = false;
+    },
+    [logIn.pending]: state => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    [logIn.fulfilled]: (state, action) => {
+      console.log(action.payload);
+      state.isLoading = false;
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.isLoggedIn = true;
+    },
+    [logIn.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
       state.isLoggedIn = false;

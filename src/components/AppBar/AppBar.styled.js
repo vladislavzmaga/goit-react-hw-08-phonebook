@@ -5,9 +5,21 @@ export const AppBarHeader = styled.header`
   height: 60px;
 `;
 
+export const AppBarNav = styled.nav`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const AppBarList = styled.ul`
   list-style: none;
   display: flex;
-  justify-content: space-between;
+  gap: 30px;
+  padding: 15px;
+`;
+
+export const AppBarListAuthMenu = styled.ul`
+  list-style: none;
+  display: flex;
+  gap: 30px;
   padding: 15px;
 `;
