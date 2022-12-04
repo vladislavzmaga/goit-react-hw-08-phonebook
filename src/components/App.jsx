@@ -1,39 +1,23 @@
-import React, { useEffect } from 'react';
-import { Form } from './Form/Form';
-import { Wrapper } from './Box/Box';
-import { Section } from './Section/Section';
-import { ContactsList } from './Contacts/Contacts';
-import { Filter } from './Filter/filter';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchContacts } from 'redux/contactsSlice';
-import { Title } from './Section/Section.styled';
+import { lazy } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { Layout } from './Layout/Layout';
 
+const Home = lazy(() => import('../pages/Home/Home'));
+const Contacts = lazy(() => import('../pages/Contacts/Contacts'));
+const Registration = lazy(() => import('../pages/Registration/Registration'));
+const LogIn = lazy(() => import('../pages/LogIn/LogIn'));
 export const App = () => {
-  const { items, error, isLoading } = useSelector(state => state.contacts);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
-
   return (
-    <Wrapper>
-      <Section title={'Phonebook'}>
-        <Form />
-      </Section>
-      {isLoading && <Title>Loading...</Title>}
-      {error && (
-        <Title>
-          Error:
-          {error}
-        </Title>
-      )}
-      {items.length > 0 && (
-        <Section title={'Contacts'}>
-          <Filter title={'Find contacts by name'} />
-          <ContactsList />
-        </Section>
-      )}
-    </Wrapper>
+    <>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />}></Route>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/contacts" element={<Contacts />}></Route>
+          <Route path="/registration" element={<Registration />}></Route>
+          <Route path="/login" element={<LogIn />}></Route>
+        </Route>
+      </Routes>
+    </>
   );
 };
