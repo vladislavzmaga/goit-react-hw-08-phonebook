@@ -42,9 +42,9 @@ export const logIn = createAsyncThunk(
 
 export const logOut = createAsyncThunk(
   'auth/logOut ',
-  async (user, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/users/logout', user);
+      const response = await axios.post('/users/logout');
       token.unset();
       return response.data;
     } catch (error) {
@@ -55,11 +55,20 @@ export const logOut = createAsyncThunk(
 
 export const refresh = createAsyncThunk(
   'auth/refresh ',
-  async (user, { rejectWithValue }) => {
+  async (_, { rejectWithValue, getState }) => {
+    const userToken = getState().auth.token;
+    if (!userToken) {
+      return rejectWithValue('No valid token');
+    }
+    token.set(userToken);
     try {
       const response = await axios.get('/users/current');
-      token.set(response.token);
-    } catch (error) {}
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        'Authorization has expired. Please login again or register.'
+      );
+    }
   }
 );
 
@@ -124,6 +133,19 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
       state.isLoggedIn = true;
+    },
+    [refresh.pending]: (state, action) => {
+      state.error = null;
+      state.isLoading = true;
+    },
+    [refresh.fulfilled]: (state, action) => {
+      state.user = action.payload;
+      state.isLoggedIn = true;
+      state.isLoading = false;
+    },
+    [refresh.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
     },
   },
 });

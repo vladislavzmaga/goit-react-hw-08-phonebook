@@ -12,9 +12,9 @@ const Contacts = () => {
   const { items, error, isLoading } = useSelector(state => state.contacts);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchContacts());
+  // }, [dispatch]);
 
   return (
     <Wrapper>
