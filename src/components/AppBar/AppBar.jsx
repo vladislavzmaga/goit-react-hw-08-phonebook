@@ -1,3 +1,6 @@
+import { AuthMenu } from 'components/AuthMenu/AuthMenu';
+import { UserMenu } from 'components/UserMenu/UserMenu';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import {
   AppBarHeader,
@@ -7,6 +10,7 @@ import {
 } from './AppBar.styled';
 
 export const AppBar = () => {
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   return (
     <AppBarHeader>
       <AppBarNav>
@@ -16,17 +20,23 @@ export const AppBar = () => {
               Home
             </NavLink>
           </li>
-          <li>
-            <NavLink to={'contacts'}>Contacts</NavLink>
-          </li>
+          {isLoggedIn && (
+            <li>
+              <NavLink to={'contacts'}>Contacts</NavLink>
+            </li>
+          )}
         </AppBarList>
         <AppBarListAuthMenu>
-          <li>
-            <NavLink to={'registration'}>Registration</NavLink>
-          </li>
-          <li>
-            <NavLink to={'login'}>LogIn</NavLink>
-          </li>
+          {!isLoggedIn && (
+            <li>
+              <AuthMenu />
+            </li>
+          )}
+          {isLoggedIn && (
+            <li>
+              <UserMenu />
+            </li>
+          )}
         </AppBarListAuthMenu>
       </AppBarNav>
     </AppBarHeader>

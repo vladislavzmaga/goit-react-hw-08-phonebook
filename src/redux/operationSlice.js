@@ -40,11 +40,16 @@ export const logIn = createAsyncThunk(
 
 export const logOut = createAsyncThunk(
   'auth/logOut ',
-  async (user, { rejectWithValue }) => {
+  async ({ rejectWithValue }) => {
     try {
       const response = await axios.post('/users/logout');
-      token.set(response.token);
-    } catch (error) {}
+      // token.set(response.token);
+      token.unset();
+      console.log(response);
+      // return response.data;
+    } catch (error) {
+      return rejectWithValue("Can't log out. Server error. Try again.");
+    }
   }
 );
 
@@ -92,7 +97,6 @@ export const authSlice = createSlice({
       state.error = null;
     },
     [logIn.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.isLoading = false;
       state.user = action.payload.user;
       state.token = action.payload.token;
@@ -102,6 +106,24 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
       state.isLoggedIn = false;
+    },
+    [logOut.pending]: state => {
+      state.error = null;
+      state.isLoading = true;
+    },
+    [logOut.fulfilled]: (state, action) => {
+      state.user = {
+        name: null,
+        email: null,
+      };
+      state.token = action.payload;
+      state.isLoading = false;
+      state.isLoggedIn = false;
+    },
+    [logOut.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+      // state.isLoggedIn = false;
     },
   },
 });
