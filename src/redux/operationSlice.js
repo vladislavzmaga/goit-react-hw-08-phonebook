@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import persistReducer from 'redux-persist/es/persistReducer';
+import storage from 'redux-persist/lib/storage';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
@@ -13,11 +15,11 @@ const token = {
 };
 
 export const registration = createAsyncThunk(
-  'auth/registrationUser',
+  'auth/registration',
   async (user, { rejectWithValue }) => {
     try {
       const response = await axios.post('/users/signup', user);
-      token.set(response.token);
+      token.set(response.data.token);
       return response.data;
     } catch (error) {
       return rejectWithValue("Can't register. Server error. Try again.");
@@ -30,7 +32,7 @@ export const logIn = createAsyncThunk(
   async (user, { rejectWithValue }) => {
     try {
       const response = await axios.post('/users/login', user);
-      token.set(response.token);
+      token.set(response.data.token);
       return response.data;
     } catch (error) {
       return rejectWithValue("Can't log in. Server error. Try again.");
@@ -40,11 +42,10 @@ export const logIn = createAsyncThunk(
 
 export const logOut = createAsyncThunk(
   'auth/logOut ',
-  async ({ rejectWithValue }) => {
+  async (user, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/users/logout');
+      const response = await axios.post('/users/logout', user);
       token.unset();
-      console.log(response);
       return response.data;
     } catch (error) {
       return rejectWithValue("Can't log out. Server error. Try again.");
@@ -110,7 +111,7 @@ export const authSlice = createSlice({
       state.error = null;
       state.isLoading = true;
     },
-    [logOut.fulfilled]: state => {
+    [logOut.fulfilled]: (state, action) => {
       state.user = {
         name: null,
         email: null,
@@ -122,7 +123,18 @@ export const authSlice = createSlice({
     [logOut.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
-      // state.isLoggedIn = false;
+      state.isLoggedIn = true;
     },
   },
 });
+
+const persistConfig = {
+  key: 'token',
+  storage,
+  whitelist: ['token'],
+};
+
+export const persistedReducer = persistReducer(
+  persistConfig,
+  authSlice.reducer
+);

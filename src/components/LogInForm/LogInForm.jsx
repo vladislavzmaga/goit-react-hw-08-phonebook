@@ -17,8 +17,7 @@ export const LogInForm = () => {
   return (
     <>
       <p>
-        'name: 'localhost', email: 'localhost4848@mail.com', password:
-        'local4848''
+        'name: localhost, email: localhost4848@mail.com , password: local4848 '
       </p>
       <form onSubmit={handleSubmit}>
         <label>
