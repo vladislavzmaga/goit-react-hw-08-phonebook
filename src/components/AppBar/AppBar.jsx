@@ -1,9 +1,10 @@
 import { AuthMenu } from 'components/AuthMenu/AuthMenu';
 import { UserMenu } from 'components/UserMenu/UserMenu';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+
 import {
   AppBarHeader,
+  AppBarLink,
   AppBarList,
   AppBarListAuthMenu,
   AppBarNav,
@@ -16,13 +17,13 @@ export const AppBar = () => {
       <AppBarNav>
         <AppBarList>
           <li>
-            <NavLink to={'/'} end>
+            <AppBarLink to={'/'} end>
               Home
-            </NavLink>
+            </AppBarLink>
           </li>
           {isLoggedIn && (
             <li>
-              <NavLink to={'contacts'}>Contacts</NavLink>
+              <AppBarLink to={'contacts'}>Contacts</AppBarLink>
             </li>
           )}
         </AppBarList>

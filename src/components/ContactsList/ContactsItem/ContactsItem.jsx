@@ -38,7 +38,7 @@ export const ContactsListItem = ({ name, number, id }) => {
       <button type="button" onClick={openModal}>
         edit
       </button>
-      {isModalOpen && <Modal onClose={closeModal} />}
+      {isModalOpen && <Modal onClose={closeModal} id={id} />}
     </ContactsItem>
   );
 };

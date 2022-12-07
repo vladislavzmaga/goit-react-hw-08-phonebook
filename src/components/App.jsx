@@ -13,9 +13,9 @@ export const App = () => {
   const { isLoggedIn, isRefreshing } = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(refresh());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(refresh());
+  }, [dispatch]);
 
   return (
     <>
@@ -24,10 +24,7 @@ export const App = () => {
       ) : (
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route
-              index
-              element={isLoggedIn ? <Contacts /> : <Navigate to="/" />}
-            ></Route>
+            <Route index element={<Home />}></Route>
             <Route path="/" element={<Home />}></Route>
             <Route
               path="contacts"

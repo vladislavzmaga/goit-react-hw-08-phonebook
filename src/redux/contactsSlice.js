@@ -45,6 +45,19 @@ export const addContact = createAsyncThunk(
   }
 );
 
+export const updateContact = createAsyncThunk(
+  'contacts/updateContact',
+  async function (user, { rejectWithValue, dispatch }) {
+    const { id, name, number } = user;
+    try {
+      const response = await axios.patch(`/contacts/${id}`, { name, number });
+      dispatch(updateContacts(response.data));
+    } catch (error) {
+      return rejectWithValue('Can`t update contact. Server error');
+    }
+  }
+);
+
 export const contactsSlice = createSlice({
   name: 'contacts',
   initialState: {
@@ -61,6 +74,14 @@ export const contactsSlice = createSlice({
       state.items = state.items.filter(
         contact => contact.id !== action.payload.id
       );
+    },
+    updateContacts(state, action) {
+      state.items = state.items.map(item => {
+        if (item.id === action.payload.id) {
+          item = action.payload;
+        }
+        return item;
+      });
     },
     filteredContacts(state, action) {
       state.filter = action.payload;
@@ -85,8 +106,11 @@ export const contactsSlice = createSlice({
     [addContact.rejected]: (state, action) => {
       state.error = action.payload;
     },
+    // [updateContact.fulfilled]: (state, action) => {
+
+    // }
   },
 });
 
-export const { addContacts, deleteContacts, filteredContacts } =
+export const { addContacts, deleteContacts, filteredContacts, updateContacts } =
   contactsSlice.actions;
