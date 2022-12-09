@@ -21,7 +21,7 @@ const Home = () => {
         <HomeWrapper>
           <HomeTitle>
             You are already logged in, please go to the
-            <HomeLink to={'/contacts'}> contact</HomeLink> page!
+            <HomeLink to={'/contacts'}> contacts</HomeLink> page!
           </HomeTitle>
         </HomeWrapper>
       )}

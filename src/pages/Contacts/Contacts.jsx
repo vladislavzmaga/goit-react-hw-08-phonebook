@@ -7,6 +7,7 @@ import { Filter } from '../../components/Filter/filter';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchContacts } from 'redux/contactsSlice';
 import { Title } from '../../components/Section/Section.styled';
+import { ErrorMessage } from 'components/error.styled';
 
 const Contacts = () => {
   const { items, error, isLoading } = useSelector(state => state.contacts);
@@ -23,10 +24,10 @@ const Contacts = () => {
       </Section>
       {isLoading && <Title>Loading...</Title>}
       {error && (
-        <Title>
+        <ErrorMessage>
           Error:
           {error}
-        </Title>
+        </ErrorMessage>
       )}
       {items.length > 0 && (
         <Section title={'Contacts'}>

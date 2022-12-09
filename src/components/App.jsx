@@ -3,6 +3,7 @@ import { lazy } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { refresh } from 'redux/operationSlice';
+import { AppWrapper } from './App.styled';
 import { Layout } from './Layout/Layout';
 
 const Home = lazy(() => import('../pages/Home/Home'));
@@ -18,7 +19,7 @@ export const App = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <AppWrapper>
       {isRefreshing ? (
         <h2>Feching user data</h2>
       ) : (
@@ -43,6 +44,6 @@ export const App = () => {
           </Route>
         </Routes>
       )}
-    </>
+    </AppWrapper>
   );
 };
