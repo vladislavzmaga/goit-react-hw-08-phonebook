@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Forms = styled.form`
+  padding-top: 15px;
   display: flex;
   flex-direction: column;
 `;
@@ -33,7 +34,7 @@ export const FormButton = styled.button`
   height: 30px;
   border-radius: 5px;
   transition: transform 300ms;
-  margin: 10px auto 0;
+  margin: 10px auto;
   :hover {
     transform: scale(1.1);
     background-color: blueviolet;

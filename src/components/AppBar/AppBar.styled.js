@@ -3,12 +3,14 @@ import styled from 'styled-components';
 
 export const AppBarHeader = styled.header`
   width: 100%;
-  height: 60px;
+  height: auto;
+  background-color: deepskyblue;
 `;
 
 export const AppBarNav = styled.nav`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const AppBarList = styled.ul`
@@ -27,4 +29,15 @@ export const AppBarListAuthMenu = styled.ul`
 
 export const AppBarLink = styled(NavLink)`
   text-decoration: none;
+  font-size: 25px;
+  color: black;
+  font-weight: bold;
+
+  &.active {
+    background-color: primary;
+    color: orangered;
+  }
+  :hover:not(.active) {
+    color: white;
+  }
 `;

@@ -1,3 +1,9 @@
+import {
+  FormButton,
+  FormInput,
+  FormLable,
+  Forms,
+} from 'components/Form/Form.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { registration } from 'redux/operationSlice';
 
@@ -18,46 +24,38 @@ export const RegistrationForm = () => {
 
   return (
     <>
-      <p>
-        {
-          "name: 'localhost', email: 'localhost4848@mail.com', password: 'local4848'"
-        }
-      </p>
       {error && <h2>{error}</h2>}
 
-      <form onSubmit={handleSubmit}>
-        <label>
+      <Forms onSubmit={handleSubmit}>
+        <FormLable>
           Name
-          <input
+          <FormInput
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             required="required"
           />
-        </label>
-        <hr></hr>
-        <label>
+        </FormLable>
+        <FormLable>
           Email
-          <input
+          <FormInput
             type="email"
             name="email"
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
             required="required"
           />
-        </label>
-        <hr></hr>
-        <label>
+        </FormLable>
+        <FormLable>
           Password
-          <input
+          <FormInput
             type="password"
             name="password"
             pattern=".{5,}"
             required="required"
           />
-        </label>
-        <hr></hr>
-        <button type="submit">Register </button>
-      </form>
+        </FormLable>
+        <FormButton type="submit">Register </FormButton>
+      </Forms>
     </>
   );
 };

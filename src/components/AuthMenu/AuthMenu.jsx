@@ -1,15 +1,14 @@
-import { NavLink } from 'react-router-dom';
-import { AuthMenuList } from './AuthMenu.styled';
+import { AuthMenuLink, AuthMenuList } from './AuthMenu.styled';
 
 export const AuthMenu = () => {
   return (
     <div>
       <AuthMenuList>
         <li>
-          <NavLink to={'registration'}>Registration</NavLink>
+          <AuthMenuLink to={'registration'}>Registration</AuthMenuLink>
         </li>
         <li>
-          <NavLink to={'login'}>LogIn</NavLink>
+          <AuthMenuLink to={'login'}>LogIn</AuthMenuLink>
         </li>
       </AuthMenuList>
     </div>

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from 'redux/operationSlice';
-import { UserMenuWrapper } from './UserMenu.styled';
+import { LogOutButton, UserMenuWrapper, UserText } from './UserMenu.styled';
 export const UserMenu = () => {
   const user = useSelector(state => state.auth.user);
   const dispatch = useDispatch();
@@ -11,10 +11,10 @@ export const UserMenu = () => {
 
   return (
     <UserMenuWrapper>
-      <p>Welcome {user.name}</p>
-      <button type="button" onClick={handleLogOut}>
+      <UserText>Welcome {user.name}</UserText>
+      <LogOutButton type="button" onClick={handleLogOut}>
         Log out
-      </button>
+      </LogOutButton>
     </UserMenuWrapper>
   );
 };

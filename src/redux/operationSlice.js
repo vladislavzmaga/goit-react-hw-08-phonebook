@@ -58,7 +58,7 @@ export const refresh = createAsyncThunk(
   async (_, { rejectWithValue, getState }) => {
     const userToken = getState().auth.token;
     if (!userToken) {
-      return rejectWithValue('No valid token');
+      return rejectWithValue('');
     }
     token.set(userToken);
     try {
