@@ -15,7 +15,7 @@ export const AuthMenuLink = styled(NavLink)`
   font-weight: bold;
   &.active {
     background-color: primary;
-    color: orangered;
+    color: dimgrey;
   }
   :hover:not(.active) {
     color: white;

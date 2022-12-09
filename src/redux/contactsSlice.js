@@ -106,9 +106,10 @@ export const contactsSlice = createSlice({
     [addContact.rejected]: (state, action) => {
       state.error = action.payload;
     },
-    // [updateContact.fulfilled]: (state, action) => {
 
-    // }
+    [updateContact.rejected]: (state, action) => {
+      state.error = action.payload;
+    },
   },
 });
 

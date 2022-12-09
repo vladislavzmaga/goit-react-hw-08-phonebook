@@ -1,3 +1,4 @@
+import { ErrorMessage } from 'components/error.styled';
 import {
   FormButton,
   FormInput,
@@ -24,7 +25,7 @@ export const RegistrationForm = () => {
 
   return (
     <>
-      {error && <h2>{error}</h2>}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
 
       <Forms onSubmit={handleSubmit}>
         <FormLable>

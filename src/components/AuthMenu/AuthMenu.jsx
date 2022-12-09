@@ -8,7 +8,7 @@ export const AuthMenu = () => {
           <AuthMenuLink to={'registration'}>Registration</AuthMenuLink>
         </li>
         <li>
-          <AuthMenuLink to={'login'}>LogIn</AuthMenuLink>
+          <AuthMenuLink to={'login'}>Sign in</AuthMenuLink>
         </li>
       </AuthMenuList>
     </div>

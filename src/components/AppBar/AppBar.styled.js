@@ -35,7 +35,7 @@ export const AppBarLink = styled(NavLink)`
 
   &.active {
     background-color: primary;
-    color: orangered;
+    color: darkgrey;
   }
   :hover:not(.active) {
     color: white;

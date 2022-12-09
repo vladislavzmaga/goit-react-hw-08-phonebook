@@ -9,6 +9,9 @@ import {
   ContactsName,
   ContactTel,
   DeleteBtn,
+  EditButton,
+  UserButtonBox,
+  UserInfoBox,
 } from './ContactsItem.styled';
 
 export const ContactsListItem = ({ name, number, id }) => {
@@ -30,14 +33,19 @@ export const ContactsListItem = ({ name, number, id }) => {
 
   return (
     <ContactsItem>
-      <ContactsName>{name}</ContactsName>
-      <ContactTel>{number}</ContactTel>
-      <DeleteBtn type="button" data-id={id} onClick={deleteUser}>
-        delete
-      </DeleteBtn>
-      <button type="button" onClick={openModal}>
-        edit
-      </button>
+      <UserInfoBox>
+        <ContactsName>{name}</ContactsName>
+        <ContactTel>{number}</ContactTel>
+      </UserInfoBox>
+      <UserButtonBox>
+        <EditButton type="button" onClick={openModal}>
+          edit
+        </EditButton>
+        <DeleteBtn type="button" data-id={id} onClick={deleteUser}>
+          delete
+        </DeleteBtn>
+      </UserButtonBox>
+
       {isModalOpen && <Modal onClose={closeModal} id={id} />}
     </ContactsItem>
   );

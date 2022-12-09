@@ -1,13 +1,15 @@
+import { ErrorMessage } from 'components/error.styled';
 import {
   FormButton,
   FormInput,
   FormLable,
   Forms,
 } from 'components/Form/Form.styled';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from 'redux/operationSlice';
 
 export const LogInForm = () => {
+  const error = useSelector(state => state.auth.error);
   const dispatch = useDispatch();
   const handleSubmit = evt => {
     evt.preventDefault();
@@ -22,6 +24,7 @@ export const LogInForm = () => {
 
   return (
     <>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
       <Forms onSubmit={handleSubmit}>
         <FormLable>
           Email
